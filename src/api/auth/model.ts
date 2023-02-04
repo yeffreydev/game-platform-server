@@ -1,17 +1,17 @@
 import { Model, model, Schema } from "mongoose";
 
-interface Iuser {
+export interface IUser {
   id?: string;
   username: string;
   email: string;
   password: string;
 }
 
-interface IuserModel extends Iuser, Model<Iuser> {
+interface IuserModel extends IUser, Model<IUser> {
   // add custom methods here
 }
 
-const userSchema = new Schema<Iuser>({
+const userSchema = new Schema<IUser>({
   username: {
     type: String,
     required: true,
@@ -28,6 +28,6 @@ const userSchema = new Schema<Iuser>({
   },
 });
 
-const User = model<Iuser, IuserModel>("User", userSchema);
+const User = model<IUser, IuserModel>("User", userSchema);
 
 export default User;
