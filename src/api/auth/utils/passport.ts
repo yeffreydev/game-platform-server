@@ -4,10 +4,11 @@ import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import { IUser } from "./../model";
 import { encryptPassword, comparePassword } from "./encryptPassword";
 import User from "../model";
+import config from "../../../config";
 
 const jwtOpts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_SECRET,
+  jwtFromRequest: ExtractJwt.fromHeader("x-access-token"),
+  secretOrKey: config.JWT_SECRET!,
 };
 
 //singup new User with passport js
@@ -41,13 +42,13 @@ passport.use(
   "login",
   new Strategy(
     {
-      usernameField: "username",
+      usernameField: "email",
       passwordField: "password",
       passReqToCallback: true,
     },
-    async (req, email, password, done) => {
+    async (req, username, password, done) => {
       try {
-        const user: IUser = (await User.findOne({ email }))!;
+        const user: IUser = (await User.findOne({ email: username }))!;
         //user not found next line
         if (!user) return done(null, false, { message: "username or password invalid" });
         const isValid = await comparePassword(password, user.password);
