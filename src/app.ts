@@ -8,6 +8,9 @@ import cors from "cors";
 import "./config/db";
 //import sockets
 import authSockets from "./api/auth/authSockets";
+import paintSocket from "./api/paint/paintSockets";
+
+//config
 import config from "./config";
 
 const app = express();
@@ -30,7 +33,16 @@ const io = new Server(httpServer, {
   },
 });
 
+const paintIo = new Server(httpServer, {
+  path: "/paint",
+  cors: {
+    origin: "*",
+  },
+});
+
 //auth socket
 authSockets(io);
+//paint socket
+paintSocket(paintIo);
 
 export default httpServer;
