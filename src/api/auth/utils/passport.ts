@@ -42,13 +42,13 @@ passport.use(
   "login",
   new Strategy(
     {
-      usernameField: "email",
+      usernameField: "username",
       passwordField: "password",
       passReqToCallback: true,
     },
     async (req, username, password, done) => {
       try {
-        const user: IUser = (await User.findOne({ email: username }))!;
+        const user: IUser = (await User.findOne({ $or: [{username}, {email: username}]}))!;
         //user not found next line
         if (!user) return done(null, false, { message: "username or password invalid" });
         const isValid = await comparePassword(password, user.password);
