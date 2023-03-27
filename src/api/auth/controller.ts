@@ -15,7 +15,7 @@ export const login: RequestHandler = async (req, res, next) => {
         const body = { _id: user._id, email: user.email };
         const token = jwt.sign({ user: body }, config.JWT_SECRET!);
         await Token.create({ userId: user._id, token, expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) });
-        return res.json({ token });
+        return res.json({ message: "Logged in successfully", user: { token, auth: true } });
       });
     } catch (e) {
       return next(e);
@@ -33,7 +33,7 @@ export const signup: RequestHandler = async (req, res, next) => {
         const body = { _id: user._id, email: user.email };
         const token = jwt.sign({ user: body }, config.JWT_SECRET!);
         await Token.create({ userId: user._id, token, expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) });
-        return res.json({ token });
+        return res.json({ message: "Logged in successfully", user: { token, auth: true } });
       });
     } catch (e) {
       return next(e);
