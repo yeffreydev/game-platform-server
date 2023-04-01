@@ -1,9 +1,9 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
-import { IUser } from "./../model";
+import { IUser } from "../../user/model";
 import { encryptPassword, comparePassword } from "./encryptPassword";
-import User from "../model";
+import User from "../../user/model";
 import config from "../../../config";
 
 const jwtOpts = {
@@ -24,6 +24,7 @@ passport.use(
       let user: IUser = {
         username,
         email: req.body.email,
+        terms: req.body.terms,
         password: await encryptPassword(password),
       };
       try {
@@ -48,7 +49,7 @@ passport.use(
     },
     async (req, username, password, done) => {
       try {
-        const user: IUser = (await User.findOne({ $or: [{username}, {email: username}]}))!;
+        const user: IUser = (await User.findOne({ $or: [{ username }, { email: username }] }))!;
         //user not found next line
         if (!user) return done(null, false, { message: "username or password invalid" });
         const isValid = await comparePassword(password, user.password);
