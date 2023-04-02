@@ -2,10 +2,13 @@ import { Router } from "express";
 import { protect } from "../../middleware/protect";
 import * as paintController from "./controller";
 
+//image uploader
+import { uploadPaints } from "../../middleware/multerUpload";
+
 const paintRoutes = Router();
 
 // create paint
-paintRoutes.post("/", protect, paintController.createPaint);
+paintRoutes.post("/", uploadPaints.single("imageFile"), protect, paintController.createPaint);
 
 // get paint by user
 paintRoutes.get("/by-user/:userId", protect, paintController.getPaintsByUser);

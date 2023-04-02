@@ -7,6 +7,10 @@ export interface IPaintModel extends IPaint, Model<IPaint> {
 
 export const paintSchema = new Schema<IPaintModel>(
   {
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
     name: {
       type: String,
       required: true,

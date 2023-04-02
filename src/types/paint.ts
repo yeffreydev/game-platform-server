@@ -2,6 +2,7 @@ import { Schema } from "mongoose";
 
 export interface IPaint {
   _id: string;
+  owner: Schema.Types.ObjectId;
   imageName: string;
   name: string;
   users: Schema.Types.ObjectId[];

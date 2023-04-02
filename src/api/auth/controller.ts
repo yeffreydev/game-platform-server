@@ -12,9 +12,9 @@ export const login: RequestHandler = async (req, res, next) => {
       if (!user) return res.status(400).json({ message: info.message });
       req.login(user, { session: false }, async (error) => {
         if (error) return next(error);
-        const body = { _id: user._id, email: user.email };
-        const token = jwt.sign({ user: body }, config.JWT_SECRET!);
-        await Token.create({ userId: user._id, token, expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) });
+        const body = { id: user._id };
+        const token = jwt.sign({ user: body }, config.JWT_SECRET!, { expiresIn: "30d" });
+        await Token.create({ id: user._id, token, expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) });
         return res.json({ message: "Logged in successfully", user: { token, auth: true } });
       });
     } catch (e) {
@@ -30,9 +30,9 @@ export const signup: RequestHandler = async (req, res, next) => {
       if (!user) return res.status(400).json({ message: info.message });
       req.login(user, { session: false }, async (error) => {
         if (error) return next(error);
-        const body = { _id: user._id, email: user.email };
-        const token = jwt.sign({ user: body }, config.JWT_SECRET!);
-        await Token.create({ userId: user._id, token, expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) });
+        const body = { id: user._id };
+        const token = jwt.sign({ user: body }, config.JWT_SECRET!, { expiresIn: "30d" });
+        await Token.create({ id: user._id, token, expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) });
         return res.json({ message: "Logged in successfully", user: { token, auth: true } });
       });
     } catch (e) {
