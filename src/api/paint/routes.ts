@@ -8,7 +8,7 @@ import { uploadPaints } from "../../middleware/multerUpload";
 const paintRoutes = Router();
 
 // create paint
-paintRoutes.post("/", uploadPaints.single("imageFile"), protect, paintController.createPaint);
+paintRoutes.post("/", protect, uploadPaints.single("imageFile"), paintController.createPaint);
 
 // get paint by user
 paintRoutes.get("/by-user/:userId", protect, paintController.getPaintsByUser);

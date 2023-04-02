@@ -1,5 +1,5 @@
 const multerConfig = {
-  paintsFolder: "public/img/picks",
+  paintsFolder: "public/img/paints",
 };
 
 export default multerConfig;

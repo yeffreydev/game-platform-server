@@ -7,7 +7,7 @@ import User from "../../user/model";
 import config from "../../../config";
 
 const jwtOpts = {
-  jwtFromRequest: ExtractJwt.fromHeader("x-access-token"),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: config.JWT_SECRET!,
 };
 
