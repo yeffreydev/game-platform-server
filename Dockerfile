@@ -26,7 +26,7 @@ COPY --from=builder /usr/local/node /usr/local/node
 COPY --from=builder /app /app
 
 WORKDIR /app
-ENV NODE_ENV production
+ENV NODE_ENV development
 ENV PATH /usr/local/node/bin:$PATH
 
 CMD [ "yarn", "run", "start" ]
