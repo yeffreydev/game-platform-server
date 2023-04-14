@@ -4,6 +4,7 @@ import router from "./router";
 import { Server } from "socket.io";
 import morgan from "morgan";
 import cors from "cors";
+import path from "path";
 //import db
 import "./config/db";
 //import sockets
@@ -23,6 +24,9 @@ app.use(
   })
 );
 app.use("/api", router);
+
+// server public folder (static files);
+app.use("/public", express.static(path.join(__dirname, "./../public")));
 
 const httpServer = createServer(app);
 

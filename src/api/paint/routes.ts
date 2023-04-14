@@ -11,7 +11,7 @@ const paintRoutes = Router();
 paintRoutes.post("/", protect, uploadPaints.single("imageFile"), paintController.createPaint);
 
 // get paint by user
-paintRoutes.get("/by-user/:userId", protect, paintController.getPaintsByUser);
+paintRoutes.get("/by-user", protect, paintController.getPaintsByUser);
 
 // get paint by id
 paintRoutes.get("/:id", protect, paintController.getPaintById);
