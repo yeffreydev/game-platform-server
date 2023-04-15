@@ -50,3 +50,16 @@ export const getPaintById: RequestHandler = async (req, res, next) => {
 };
 export const updatePaintById: RequestHandler = (req, res, next) => {};
 export const deletePaintById: RequestHandler = (req, res, next) => {};
+
+//painting
+//save paint
+export const savePaint: RequestHandler = (req, res, next) => {
+  try {
+    const imageName = req.file?.filename;
+    if (!imageName) return res.status(301).json({ message: "file not saved" });
+    return res.status(200).json({ name: imageName });
+  } catch (e) {
+    console.log(e);
+    res.status(501).json({ message: "error in server" });
+  }
+};

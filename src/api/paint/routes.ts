@@ -3,7 +3,7 @@ import { protect } from "../../middleware/protect";
 import * as paintController from "./controller";
 
 //image uploader
-import { uploadPaints } from "../../middleware/multerUpload";
+import { uploadPaintAndUpdate, uploadPaints } from "../../middleware/multerUpload";
 
 const paintRoutes = Router();
 
@@ -21,5 +21,8 @@ paintRoutes.put("/:id", protect, paintController.updatePaintById);
 
 // delete paint by id
 paintRoutes.delete("/:id", protect, paintController.deletePaintById);
+
+//save paint
+paintRoutes.post("/save", protect, uploadPaintAndUpdate.single("imageFile"), paintController.savePaint);
 
 export default paintRoutes;

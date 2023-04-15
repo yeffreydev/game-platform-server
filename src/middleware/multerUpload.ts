@@ -15,6 +15,19 @@ const generateStorage = (folder: string) => {
   });
 };
 
+const generateStorageUpdateFile = (folder: string) => {
+  return multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, folder);
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
+};
 //paint storage
 const paintsStorage = generateStorage(multerConfig.paintsFolder);
+//paint storag update
+const paintStorageUpdate = generateStorageUpdateFile(multerConfig.paintsFolder);
 export const uploadPaints = multer({ storage: paintsStorage });
+export const uploadPaintAndUpdate = multer({ storage: paintStorageUpdate });
