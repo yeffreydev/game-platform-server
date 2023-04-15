@@ -37,6 +37,16 @@ export const getPaintsByUser: RequestHandler = async (req, res, next) => {
     res.status(501).json({ message: "server error: find userPaints" });
   }
 };
-export const getPaintById: RequestHandler = (req, res, next) => {};
+export const getPaintById: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const paint = await Paint.findById(id);
+    if (!paint) return res.status(404).json({ message: "Paint not found" });
+    res.status(200).json(paint);
+  } catch (e) {
+    console.log(e);
+    res.status(501).json({ message: "server error: find paint by id" });
+  }
+};
 export const updatePaintById: RequestHandler = (req, res, next) => {};
 export const deletePaintById: RequestHandler = (req, res, next) => {};
