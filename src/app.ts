@@ -11,10 +11,16 @@ import "./config/db";
 import authSockets from "./api/auth/authSockets";
 import paintSocket from "./api/paint/paintSockets";
 
+//scripts
+import createDataFoldersScript from "./scripts/createDataFolders";
+
 //config
 import config from "./config";
 
 const app = express();
+
+//run start scripts
+createDataFoldersScript.init();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));

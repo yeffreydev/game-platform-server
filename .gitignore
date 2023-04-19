@@ -4,6 +4,8 @@ node_modules
 /public
 /dist
 
+#data generated 
+/data
 
 .env
 
