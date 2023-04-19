@@ -31,3 +31,22 @@ export const addNewPaintSocket = async (paintId: string, socketId: string) => {
     console.log(e);
   }
 };
+
+export const removePaintSocket = async (paintId: string, socketId: string) => {
+  try {
+    const file = paintId + ".json";
+    const filePath = paintConfig.folder + file;
+    const isFileExists = verifyFileExists(filePath);
+    if (!isFileExists) {
+      return writeFile(paintConfig.folder, file, JSON.stringify([socketId]));
+    }
+    const paintSockets = await readOnlinePaints(paintId);
+    if (!paintSockets.find((item) => item === socketId)) throw new Error("Socket id not found");
+    const newPaintsSockets = paintSockets.filter((item) => item != socketId);
+    //save newData
+    const stringData = JSON.stringify(newPaintsSockets);
+    writeFile(paintConfig.folder, file, stringData);
+  } catch (e) {
+    console.log(e);
+  }
+};
