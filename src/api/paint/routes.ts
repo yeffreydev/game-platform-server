@@ -4,6 +4,7 @@ import * as paintController from "./controller";
 
 //image uploader
 import { uploadPaintAndUpdate, uploadPaints } from "../../middleware/multerUpload";
+import { verifyPaintOwnership } from "./middleware";
 
 const paintRoutes = Router();
 
@@ -23,6 +24,6 @@ paintRoutes.put("/:id", protect, paintController.updatePaintById);
 paintRoutes.delete("/:id", protect, paintController.deletePaintById);
 
 //save paint
-paintRoutes.post("/save", protect, uploadPaintAndUpdate.single("imageFile"), paintController.savePaint);
+paintRoutes.post("/save/:id", protect, verifyPaintOwnership, uploadPaintAndUpdate.single("imageFile"), paintController.savePaint);
 
 export default paintRoutes;
