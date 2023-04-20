@@ -49,7 +49,16 @@ export const getPaintById: RequestHandler = async (req, res, next) => {
   }
 };
 export const updatePaintById: RequestHandler = (req, res, next) => {};
-export const deletePaintById: RequestHandler = (req, res, next) => {};
+export const deletePaintById: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await Paint.findByIdAndDelete(id);
+    res.status(200).json({ message: "paint deleted" });
+  } catch (e) {
+    console.log(e);
+    res.status(501).json({ message: "server error: delete paint by id" });
+  }
+};
 
 //painting
 //save paint

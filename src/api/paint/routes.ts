@@ -21,7 +21,7 @@ paintRoutes.get("/:id", protect, paintController.getPaintById);
 paintRoutes.put("/:id", protect, paintController.updatePaintById);
 
 // delete paint by id
-paintRoutes.delete("/:id", protect, paintController.deletePaintById);
+paintRoutes.delete("/:id", protect, verifyPaintOwnership, paintController.deletePaintById);
 
 //save paint
 paintRoutes.post("/save/:id", protect, verifyPaintOwnership, uploadPaintAndUpdate.single("imageFile"), paintController.savePaint);
