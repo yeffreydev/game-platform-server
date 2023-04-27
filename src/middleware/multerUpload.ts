@@ -29,5 +29,7 @@ const generateStorageUpdateFile = (folder: string) => {
 const paintsStorage = generateStorage(multerConfig.paintsFolder);
 //paint storag update
 const paintStorageUpdate = generateStorageUpdateFile(multerConfig.paintsFolder);
+
+//export middlewares
 export const uploadPaints = multer({ storage: paintsStorage });
 export const uploadPaintAndUpdate = multer({ storage: paintStorageUpdate });

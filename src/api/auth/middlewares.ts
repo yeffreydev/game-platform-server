@@ -3,22 +3,16 @@ import { validateEmail, validateUsername, validatePassword } from "./utils/valid
 import { IUser } from "../user/model";
 
 export const validateSignupFields: RequestHandler = (req, res, next) => {
-  const { email, username, password } = req.body as IUser;
+  const { email, username, password, terms } = req.body as IUser;
 
-  if (!validateEmail(email)) {
-    res.status(400).json({ error: "Invalid email address" });
-    return;
-  }
+  const emailError = validateEmail(email);
+  if (emailError) return res.status(400).json({ message: emailError });
 
-  if (!validateUsername(username)) {
-    res.status(400).json({ error: "Invalid username" });
-    return;
-  }
+  const usernameError = validateUsername(username);
+  if (usernameError) return res.status(400).json({ message: usernameError });
 
-  if (!validatePassword(password)) {
-    res.status(400).json({ error: "Invalid password" });
-    return;
-  }
-
+  const passwordError = validatePassword(password);
+  if (passwordError) return res.status(400).json({ message: passwordError });
+  if (!terms) return res.status(400).json({ message: "Please accept terms and conditions" });
   next();
 };

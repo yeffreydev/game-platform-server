@@ -28,8 +28,11 @@ passport.use(
         password: await encryptPassword(password),
       };
       try {
+        let findUerByusername = await User.findOne({ username });
+        if (findUerByusername) return done(null, false, { message: "username already exists" });
+        let findUserByEmail = await User.findOne({ email: req.body.email });
+        if (findUserByEmail) return done(null, false, { message: "email already exists" });
         let newUser = await User.create(user);
-        if (!newUser) return done(null, false, { message: "username not avilable" });
         return done(null, newUser);
       } catch (e) {
         done(e);
@@ -49,7 +52,7 @@ passport.use(
     },
     async (req, username, password, done) => {
       try {
-        const user: IUser = (await User.findOne({ $or: [{ username }, { email: username }] }))!;
+        const user: IUser | null = await User.findOne({ $or: [{ username }, { email: username }] });
         //user not found next line
         if (!user) return done(null, false, { message: "username or password invalid" });
         const isValid = await comparePassword(password, user.password);
